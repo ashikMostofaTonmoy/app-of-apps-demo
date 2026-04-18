@@ -25,7 +25,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: server
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.images.repository }}/frontend:{{ .Values.images.tag }}"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

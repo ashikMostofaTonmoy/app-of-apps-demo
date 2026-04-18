@@ -24,7 +24,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: server
-          image: "{{ .Values.imageRegistry }}/recommendationservice:{{ .Values.imageTag }}"
+          image: "{{ .Values.images.repository }}/recommendationservice:{{ .Values.images.tag }}"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

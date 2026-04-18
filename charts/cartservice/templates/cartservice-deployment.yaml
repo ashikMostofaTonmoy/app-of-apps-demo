@@ -24,7 +24,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: server
-          image: "{{ .Values.cartservice.image.repository }}:{{ .Values.cartservice.image.tag }}"
+          image: "{{ .Values.images.repository }}/cartservice:{{ .Values.images.tag }}"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

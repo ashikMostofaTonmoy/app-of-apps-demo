@@ -1,10 +1,10 @@
-image:
-  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice
+# Mirrors official helm-chart/values.yaml image structure
+images:
+  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo
   tag: "v0.10.5"
 
 replicaCount: 1
 
-# Downstream service addresses (all in same namespace — short DNS names resolve)
 services:
   productCatalog: "productcatalogservice:3550"
   shipping: "shippingservice:50051"

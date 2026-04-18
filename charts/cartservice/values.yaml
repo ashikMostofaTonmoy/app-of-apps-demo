@@ -1,11 +1,12 @@
+# Mirrors official helm-chart/values.yaml image structure
+images:
+  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo
+  tag: "v0.10.5"
+
 cartservice:
-  image:
-    repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice
-    tag: "v0.10.5"
   replicaCount: 1
 
+# redis-cart uses public Docker Hub image (same as official chart publicRepository: true)
 redis:
-  image:
-    repository: redis
-    tag: "alpine"
+  image: redis:alpine
   replicaCount: 1

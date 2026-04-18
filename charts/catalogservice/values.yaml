@@ -1,5 +1,7 @@
-imageRegistry: us-central1-docker.pkg.dev/google-samples/microservices-demo
-imageTag: "v0.10.5"
+# Mirrors official helm-chart/values.yaml image structure
+images:
+  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo
+  tag: "v0.10.5"
 
 productcatalogservice:
   replicaCount: 1

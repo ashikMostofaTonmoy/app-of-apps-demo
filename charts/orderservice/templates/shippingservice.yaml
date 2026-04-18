@@ -23,7 +23,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: server
-          image: "{{ .Values.imageRegistry }}/shippingservice:{{ .Values.imageTag }}"
+          image: "{{ .Values.images.repository }}/shippingservice:{{ .Values.images.tag }}"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

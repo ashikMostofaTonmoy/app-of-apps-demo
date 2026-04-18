@@ -24,7 +24,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: server
-          image: "{{ .Values.imageRegistry }}/productcatalogservice:{{ .Values.imageTag }}"
+          image: "{{ .Values.images.repository }}/productcatalogservice:{{ .Values.images.tag }}"
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
