@@ -57,7 +57,7 @@ Replace `https://github.com/ashikMostofaTonmoy/app-of-apps-demo.git` in:
 ### Step 2 — Push to Git
 
 ```bash
-git add argocd/app-of-apps-demo/
+git add 
 git commit -m "add app-of-apps online boutique demo"
 git push
 ```

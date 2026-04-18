@@ -12,7 +12,7 @@ spec:
   source:
     repoURL: https://github.com/ashikMostofaTonmoy/app-of-apps-demo.git
     targetRevision: main
-    path: argocd/app-of-apps-demo/charts/cartservice
+    path: charts/cartservice
   destination:
     server: https://kubernetes.default.svc
     namespace: onlineboutique
