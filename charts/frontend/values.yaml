@@ -13,3 +13,4 @@ services:
   shipping: "shippingservice:50051"
   checkout: "checkoutservice:5050"
   ad: "adservice:9555"
+  shoppingAssistant: "shoppingassistantservice:80"

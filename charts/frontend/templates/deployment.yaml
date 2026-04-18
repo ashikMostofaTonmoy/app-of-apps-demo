@@ -68,6 +68,8 @@ spec:
               value: {{ .Values.services.checkout | quote }}
             - name: AD_SERVICE_ADDR
               value: {{ .Values.services.ad | quote }}
+            - name: SHOPPING_ASSISTANT_SERVICE_ADDR
+              value: {{ .Values.services.shoppingAssistant | quote }}
             - name: ENABLE_PROFILER
               value: "0"
           resources:
