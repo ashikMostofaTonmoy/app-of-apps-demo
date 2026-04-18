@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cartservice
+description: Cart service (gRPC) + Redis cart backend
+type: application
+version: 0.1.0
+appVersion: "v0.10.5"

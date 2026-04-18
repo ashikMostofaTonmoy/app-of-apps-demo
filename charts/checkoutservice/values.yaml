@@ -1,0 +1,14 @@
+image:
+  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice
+  tag: "v0.10.5"
+
+replicaCount: 1
+
+# Downstream service addresses (all in same namespace — short DNS names resolve)
+services:
+  productCatalog: "productcatalogservice:3550"
+  shipping: "shippingservice:50051"
+  payment: "paymentservice:50051"
+  email: "emailservice:5000"
+  currency: "currencyservice:7000"
+  cart: "cartservice:7070"

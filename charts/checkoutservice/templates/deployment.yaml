@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkoutservice
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: checkoutservice
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: checkoutservice
+  template:
+    metadata:
+      labels:
+        app: checkoutservice
+    spec:
+      serviceAccountName: checkoutservice
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            privileged: false
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 5050
+          readinessProbe:
+            grpc:
+              port: 5050
+          livenessProbe:
+            grpc:
+              port: 5050
+          env:
+            - name: PORT
+              value: "5050"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: {{ .Values.services.productCatalog | quote }}
+            - name: SHIPPING_SERVICE_ADDR
+              value: {{ .Values.services.shipping | quote }}
+            - name: PAYMENT_SERVICE_ADDR
+              value: {{ .Values.services.payment | quote }}
+            - name: EMAIL_SERVICE_ADDR
+              value: {{ .Values.services.email | quote }}
+            - name: CURRENCY_SERVICE_ADDR
+              value: {{ .Values.services.currency | quote }}
+            - name: CART_SERVICE_ADDR
+              value: {{ .Values.services.cart | quote }}
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

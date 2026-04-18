@@ -1,0 +1,15 @@
+image:
+  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend
+  tag: "v0.10.5"
+
+replicaCount: 1
+
+# Service addresses — all services in same namespace so short DNS names work
+services:
+  productCatalog: "productcatalogservice:3550"
+  currency: "currencyservice:7000"
+  cart: "cartservice:7070"
+  recommendation: "recommendationservice:8080"
+  shipping: "shippingservice:50051"
+  checkout: "checkoutservice:5050"
+  ad: "adservice:9555"

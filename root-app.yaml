@@ -1,0 +1,25 @@
+# ROOT APPLICATION — deploy this ONE file, ArgoCD deploys everything else
+# kubectl apply -f root-app.yaml -n argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-root
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ashikMostofaTonmoy/app-of-apps-demo.git
+    targetRevision: main
+    path: argocd/app-of-apps-demo/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

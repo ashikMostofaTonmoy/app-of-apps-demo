@@ -1,0 +1,11 @@
+cartservice:
+  image:
+    repository: us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice
+    tag: "v0.10.5"
+  replicaCount: 1
+
+redis:
+  image:
+    repository: redis
+    tag: "alpine"
+  replicaCount: 1

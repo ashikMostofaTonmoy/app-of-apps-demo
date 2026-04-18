@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: checkoutservice
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/part-of: online-boutique
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ashikMostofaTonmoy/app-of-apps-demo.git
+    targetRevision: main
+    path: argocd/app-of-apps-demo/charts/checkoutservice
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: onlineboutique
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

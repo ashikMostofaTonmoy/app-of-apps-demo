@@ -1,0 +1,14 @@
+imageRegistry: us-central1-docker.pkg.dev/google-samples/microservices-demo
+imageTag: "v0.10.5"
+
+emailservice:
+  replicaCount: 1
+
+paymentservice:
+  replicaCount: 1
+
+shippingservice:
+  replicaCount: 1
+
+adservice:
+  replicaCount: 1

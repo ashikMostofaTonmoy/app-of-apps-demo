@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    spec:
+      serviceAccountName: frontend
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: server
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            privileged: false
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: "/_healthz"
+              port: 8080
+              httpHeaders:
+                - name: "Cookie"
+                  value: "shop_session-id=x-readiness-probe"
+          livenessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: "/_healthz"
+              port: 8080
+              httpHeaders:
+                - name: "Cookie"
+                  value: "shop_session-id=x-liveness-probe"
+          env:
+            - name: PORT
+              value: "8080"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: {{ .Values.services.productCatalog | quote }}
+            - name: CURRENCY_SERVICE_ADDR
+              value: {{ .Values.services.currency | quote }}
+            - name: CART_SERVICE_ADDR
+              value: {{ .Values.services.cart | quote }}
+            - name: RECOMMENDATION_SERVICE_ADDR
+              value: {{ .Values.services.recommendation | quote }}
+            - name: SHIPPING_SERVICE_ADDR
+              value: {{ .Values.services.shipping | quote }}
+            - name: CHECKOUT_SERVICE_ADDR
+              value: {{ .Values.services.checkout | quote }}
+            - name: AD_SERVICE_ADDR
+              value: {{ .Values.services.ad | quote }}
+            - name: ENABLE_PROFILER
+              value: "0"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
