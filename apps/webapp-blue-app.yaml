@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: live-demo-b9
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/part-of: app-of-apps-demo
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ashikMostofaTonmoy/app-of-apps-demo.git
+    targetRevision: main
+    path: charts/webapp
+    helm:
+      values: |
+        image:
+          repository: argoproj/rollouts-demo
+          pullPolicy: IfNotPresent
+          tag: "blue"
+        nameOverride: "live-demo-b9"
+        fullnameOverride: "live-demo-b9"
+        service:
+          type: ClusterIP
+          port: 8080
+        ingress:
+          enabled: true
+          className: "external-nginx"
+          hosts:
+            - host: 8s-ingress-external-c86d5ee235-11579f90ec243ea9.elb.ap-northeast-2.amazonaws.com
+              paths:
+                - path: /
+                  pathType: Prefix
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+        env:
+          - name: COLOR
+            value: "blue"
+          - name: MESSAGE
+            value: "Hello from the blue deployment!"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: live-demo-b9
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

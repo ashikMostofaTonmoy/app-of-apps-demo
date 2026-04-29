@@ -1,0 +1,65 @@
+replicaCount: 2
+
+image:
+  repository: nginx  # Using nginx as example
+  tag: "1.21"
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  enabled: true
+  className: external-nginx
+  # annotations:
+  #   cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: myapp.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #   - secretName: myapp-tls
+  #     hosts:
+  #       - myapp.example.com
+
+# Environment variables for the application
+env:
+  NODE_ENV: "production"
+  API_URL: "https://api.example.com"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: false
+  auth:
+    postgresPassword: "supersecret"
+    database: "webapp"
+
+# Horizontal Pod Autoscaler
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Pod annotations
+podAnnotations: {}
+
+# Security context
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
