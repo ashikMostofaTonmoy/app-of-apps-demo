@@ -28,7 +28,7 @@ spec:
           enabled: true
           className: "external-nginx"
           hosts:
-            - host: 8s-ingress-external-c86d5ee235-11579f90ec243ea9.elb.ap-northeast-2.amazonaws.com
+            - host: k8s-ingress-external-c86d5ee235-11579f90ec243ea9.elb.ap-northeast-2.amazonaws.com
               paths:
                 - path: /
                   pathType: Prefix
