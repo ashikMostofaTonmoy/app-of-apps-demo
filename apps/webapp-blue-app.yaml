@@ -47,6 +47,11 @@ spec:
           httpGet:
             path: /
             port: http
+        env:
+          - name: COLOR
+            value: "blue"
+          - name: MESSAGE
+            value: "Hello from the blue deployment!"
   destination:
     server: https://kubernetes.default.svc
     namespace: live-demo-b9
